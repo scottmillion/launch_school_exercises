@@ -1,0 +1,1 @@
+puts (1..100).to_a.select { |x| x.odd? }
