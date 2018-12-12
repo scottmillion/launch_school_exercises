@@ -1,7 +1,7 @@
-# not finished
+ALPHA_NUMERIC_STRING = ('a'..'z').to_a + ('0'..'9').to_a
 
 def alpha_numeric(string)
-  string.chars.select { |x| ('a'..'z').include? x }
+  string.chars.select { |x| ALPHA_NUMERIC_STRING.include? x }
 end
 
 def real_palindrome?(phrase)
