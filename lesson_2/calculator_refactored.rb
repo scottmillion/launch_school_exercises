@@ -11,7 +11,6 @@ def operation_to_message(operator)
   operators[operator.to_i - 1]
 end
 
-
 name = ''
 loop do
   prompt("Welcome to Calculator! Enter your name:")
@@ -37,8 +36,8 @@ loop do
 
   number2 = ''
   loop do
-  prompt("What's the second number?")
-  number2 = Kernel.gets().chomp()
+    prompt("What's the second number?")
+    number2 = Kernel.gets().chomp()
 
     if valid_number?(number2)
       break
@@ -57,15 +56,17 @@ loop do
 
   # ask the user for an operation to perform
   prompt(operator_prompt)
-  
+
   operator = ''
   loop do
     operator = Kernel.gets().chomp()
-    break if ('1'..'4').to_a.include?(operator) # %w(1 2 3 4).indlude?(operator) works too!
+    # %w(1 2 3 4).indlude?(operator) works too!
+    break if ('1'..'4').to_a.include?(operator)
     prompt("Oops! Must choose 1, 2, 3, or 4. Try again.")
   end
 
-  prompt("#{operation_to_message(operator)} the two numbers #{number1} and #{number2}...")
+  prompt("#{operation_to_message(operator)} the two" \
+    " numbers #{number1} and #{number2}...")
 
   # perform the operation on the two numbers
   case operator
@@ -73,7 +74,7 @@ loop do
     result = number1.to_i() + number2.to_i()
   when '2'
     result = number1.to_i() - number2.to_i()
-  when '3' 
+  when '3'
     result = number1.to_i() * number2.to_i()
   when '4'
     result = number1.to_f() / number2.to_f()
@@ -81,15 +82,11 @@ loop do
     puts "error"
   end
 
-# output the result
-prompt("It's #{result}")
-prompt("Do you want to perform another calculation? (Y to calculate again)")
-answer = Kernel.gets().chomp()
-break unless answer.downcase().start_with?('y')
-
-
+  # output the result
+  prompt("It's #{result}")
+  prompt("Do you want to perform another calculation? (Y to calculate again)")
+  answer = Kernel.gets().chomp()
+  break unless answer.downcase().start_with?('y')
 end
 
 prompt("Thank you for using the calculator. Good bye!")
-
-# Kernel.puts(number1.inspect)
