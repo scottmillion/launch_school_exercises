@@ -3,7 +3,7 @@ def dms(float)
   decimal = float - degrees
   raw_minutes = decimal * 60.0
   minutes = raw_minutes.floor
-  seconds = ((raw_minutes - raw_minutes.floor) * 60.0).round
+  seconds = ((raw_minutes - minutes) * 60.0).round
 
   if seconds == 60
     minutes += 1 
