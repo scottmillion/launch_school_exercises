@@ -1,3 +1,5 @@
+require 'pry'
+
 INITIAL_MARKER = ' '
 PLAYER_MARKER = 'X'
 COMPUTER_MARKER = 'O'
@@ -9,6 +11,21 @@ WINNING_LINES = [
 
 def prompt(msg)
   puts "=> #{msg}"
+end
+
+def joinor(array, delim=', ', final_delim='or')
+  case array.size
+  when 0 then ''
+  when 1 then array.first
+  when 2 then "#{array[0]} #{final_delim} #{array[-1]}"
+  else
+    array[-1] = "#{final_delim} #{array.last}"
+    array.join(delim)
+    # array_new = []
+    # array[0..-2].each { |element| array_new += [element, delim ] }
+    # array_new += [final_delim + ' ', array[-1]]
+    # array_new.join
+  end
 end
 
 # rubocop:disable Metrics/AbcSize
@@ -44,7 +61,7 @@ end
 def player_places_piece!(brd)
   square = ''
   loop do
-    prompt "Choose a square (#{empty_squares(brd).join(', ')})"
+    prompt "Choose a square (#{joinor(empty_squares(brd))})"
     square = gets.chomp.to_i
     break if empty_squares(brd).include?(square)
     prompt "Sorry, that's not a valid choice."
@@ -53,8 +70,26 @@ def player_places_piece!(brd)
   brd[square] = PLAYER_MARKER
 end
 
+def find_at_risk_square(brd)
+  brd_clone = brd.clone
+  empty_squares(brd).each do |available_square|
+    brd_clone[available_square] = COMPUTER_MARKER
+    return available_square if detect_winner(brd_clone) == 'Computer'
+    brd_clone[available_square] = INITIAL_MARKER
+  end
+  
+  empty_squares(brd).each do |available_square|
+    brd_clone[available_square] = PLAYER_MARKER
+    return available_square if detect_winner(brd_clone) == 'Player'
+    brd_clone[available_square] = INITIAL_MARKER
+  end
+  nil
+end
+
 def computer_places_piece!(brd)
-  square = empty_squares(brd).sample
+  square = find_at_risk_square(brd)
+  square = 5 if square.nil? && empty_squares(brd).include?(5)
+  square = empty_squares(brd).sample if square.nil?
   brd[square] = COMPUTER_MARKER
 end
 
@@ -78,6 +113,9 @@ def detect_winner(brd)
   nil
 end
 
+player_wins = 0
+computer_wins = 0
+
 loop do
   board = initialize_board
 
@@ -95,13 +133,28 @@ loop do
 
   if someone_won?(board)
     prompt "#{detect_winner(board)} won!"
+    player_wins += 1 if detect_winner(board) == 'Player'
+    computer_wins += 1 if detect_winner(board) == 'Computer'
   else
     prompt "It's a tie!"
+    player_wins += 1
+    computer_wins += 1
   end
 
-  prompt "Play again? (y or n)"
-  answer = gets.chomp
-  break unless answer.downcase.start_with?('y')
+  if player_wins == 5 && computer_wins == 5
+    puts "The final score is 5 - 5."
+    break
+  elsif player_wins == 5
+    puts "You won 5 times. You are the grand winner."
+    break
+  elsif computer_wins == 5
+    puts "The computer won 5 times. You lost the match."
+    break
+  else
+    prompt "Play again? (y or n)"
+    answer = gets.chomp
+    break unless answer.downcase.start_with?('y')
+  end
 end
 
 prompt "Thanks for playing Tic Tac Toe! Goodbye!"
