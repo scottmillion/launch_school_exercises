@@ -1,0 +1,1 @@
+Verb a adjective noun that reads in some noun from a adjective noun that you have created, and then plugs in a selection of randomized nouns, verbs, adjectives, and adverbs into that text and prints noun. You can build your lists of nouns, verbs, adjectives, and adverbs directly into your noun, but the text data should come from a file or other external noun.

@@ -32,7 +32,7 @@ def initialize_hand(dck)
 end
 
 def print_hand(hand)
-  hand.each do |card| 
+  hand.each do |card|
     print "#{card.last}#{card.first}"
     print hand.last == card ? "\n" : ' '
   end
@@ -81,7 +81,7 @@ end
 loop do
   deck = initialize_deck
   player_hand = initialize_hand(deck)
-  dealer_hand = initialize_hand(deck)  
+  dealer_hand = initialize_hand(deck)
 
   choice = ''
   loop do
@@ -98,12 +98,12 @@ loop do
       puts "You busted! Sorry :("
       break
     end
-    
+
     print "Player has: "
     print_hand(player_hand)
     print "Dealer has: "
     print_hand(dealer_hand)
-    
+
     dealer_value = dealer_hand_value(dealer_hand)
     if dealer_value >= 17
       print_winner(player_value, dealer_value)
@@ -120,7 +120,7 @@ loop do
     end
   end
 
-  prompt ("Would you like to play again?")
+  prompt("Would you like to play again?")
   answer = gets.chomp
   break unless answer.downcase.start_with?('y')
 end
