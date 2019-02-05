@@ -37,7 +37,6 @@ def merge_sort(arr)
   flatten_and_sort(deep_nest(arr))
 end
 
-
 p merge_sort([9, 5, 7, 1]) == [1, 5, 7, 9]
 p merge_sort([5, 3]) == [3, 5]
 p merge_sort([6, 2, 7, 1, 4]) == [1, 2, 4, 6, 7]
