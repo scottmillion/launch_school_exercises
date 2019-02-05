@@ -1,18 +1,20 @@
+def delete_first_min!(arr)
+  min_index = arr.index(arr.min)
+  arr.delete_at(min_index)
+end
+
 def merge(arr1, arr2)
-  return [] if arr2.empty? && arr1.empty?
-  return arr2 if arr1.empty?
-  return arr1 if arr2.empty?
-
-  result_list = []
-  saved_numbers = []
-
-
-  arr1.min < arr2.min ? num = arr1.min : num = arr2.min
-  num = arr1.min ? num2 = arr2.min : num2 = arr2.min
-
-  result list << num
-  p num2
-
+  holder = []
+  merged_array = []
+  (arr1.size + arr2.size).times do |x|
+    case 
+    when arr1[x] && arr2[x]      then holder.push(arr1[x], arr2[x])
+    when arr1[x].nil? && arr2[x] then holder.push(arr2[x])
+    when arr2[x].nil? && arr1[x] then holder.push(arr1[x])
+    end
+    merged_array << delete_first_min!(holder)
+  end
+  merged_array
 end
 
 p merge([1, 5, 9], [2, 6, 8]) == [1, 2, 5, 6, 8, 9]
